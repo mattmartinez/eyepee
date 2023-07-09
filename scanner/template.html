@@ -71,14 +71,19 @@
         </thead>
         <tbody>
             {% for contract in contracts %}
-                <tr>
-                    <td style="font-size: 18px;"><a href="https://gopluslabs.io/token-security/1/{{ contract.address }}">{{ contract.address }}</a></td>
-                    <td style="font-size: 18px;"><a href="https://gopluseco.io/analysis/{{ contract.creator }}">{{ contract.creator }}</a></td>
-                    <td style="font-size: 18px;">{{ contract.block }}</td>
-                    <td style="font-size: 18px;">{{ contract.name }}</td>
-                    <td style="font-size: 18px;">{{ contract.supply }}</td>
-                </tr>
-            {% endfor %}
+            <tr>
+                <td style="font-size: 18px;">
+                    <a href="https://gopluslabs.io/token-security/1/{{ contract.address }}">{{ contract.address }}</a>
+                    <a href="https://www.dextools.io/app/ether/pair-explorer/{{ contract.address }}" target="_blank">
+                        <img src="https://www.dextools.io/app/assets/img/logo/apple-touch-icon.png" alt="DexTools Icon" style="height: 1em;">
+                    </a>
+                </td>
+                <td style="font-size: 18px;"><a href="https://gopluseco.io/analysis/{{ contract.creator }}">{{ contract.creator }}</a></td>
+                <td style="font-size: 18px;">{{ contract.block }}</td>
+                <td style="font-size: 18px;">{{ contract.name }}</td>
+                <td style="font-size: 18px;">{{ contract.supply }}</td>
+            </tr>
+        {% endfor %}        
         </tbody>
     </table>
     <div id="popup" class="popup" style="display: none;">
