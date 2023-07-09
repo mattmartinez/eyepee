@@ -56,9 +56,12 @@
 </head>
 <body>
     <h1 class="text-center">EYEPEE ERC20 Token Scanner</h1>
-    <div class="about-container border rounded p-3">
+    <div class="about-container border rounded p-3 d-flex justify-content-between">
         <a href="javascript:void(0);" class="about-toggle" onclick="toggleAbout()">About</a>
-    </div>
+        <div class="text-end" style="color: red; font-weight: bold;">
+            THIS WEBSITE WILL NEVER ASK FOR A WALLET CONNECTION
+        </div>
+    </div>    
     <table class="table table-bordered">
         <thead class="bg-success text-white">
             <tr>
@@ -77,13 +80,19 @@
                     <a href="https://www.dextools.io/app/ether/pair-explorer/{{ contract.address }}" target="_blank">
                         <img src="https://www.dextools.io/app/assets/img/logo/apple-touch-icon.png" alt="DexTools Icon" style="height: 1em;">
                     </a>
+                    <a href="https://dexscreener.com/ethereum/{{ contract.address }}" target="_blank">
+                        <img src="https://dexscreener.com/favicon.png" alt="DexScreener Icon" style="height: 1em;">
+                    </a>
+                    <a href="https://etherscan.io/address/{{ contract.address }}" target="_blank">
+                        <img src="https://etherscan.io/images/favicon3-light.ico" alt="Etherscan Icon" style="height: 1em;">
+                    </a>
                 </td>
                 <td style="font-size: 18px;"><a href="https://gopluseco.io/analysis/{{ contract.creator }}">{{ contract.creator }}</a></td>
                 <td style="font-size: 18px;">{{ contract.block }}</td>
                 <td style="font-size: 18px;">{{ contract.name }}</td>
                 <td style="font-size: 18px;">{{ contract.supply }}</td>
             </tr>
-        {% endfor %}        
+        {% endfor %}             
         </tbody>
     </table>
     <div id="popup" class="popup" style="display: none;">
