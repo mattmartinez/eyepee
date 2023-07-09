@@ -55,7 +55,7 @@
     </script>
 </head>
 <body>
-    <h1 class="mx-auto">EYEPEE ERC20 Token Scanner</h1>
+    <h1 class="text-center">EYEPEE ERC20 Token Scanner</h1>
     <div class="about-container border rounded p-3">
         <a href="javascript:void(0);" class="about-toggle" onclick="toggleAbout()">About</a>
     </div>
@@ -81,18 +81,23 @@
             {% endfor %}
         </tbody>
     </table>
-
     <div id="popup" class="popup" style="display: none;">
         <span class="popup-close" onclick="toggleAbout()">Close</span>
-        <p>This app is scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.
-
-- It continuously checks for new blocks and scans the transactions within those blocks.
-- When it detects a contract creation transaction, it retrieves the contract address and fetches the token name and total supply.
-- If the token name is available, it logs the details of the newly created ERC20 token.
-- The script also generates an HTML report using a template, which includes the contract addresses, block numbers, token names, and total supplies of the newly created tokens.
+        <p>This app is a scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.
+    
+        - It continuously checks for new blocks and scans the transactions within those blocks.
+        - When it detects a contract creation transaction, it retrieves the contract address and fetches the token name and total supply.
+        - If the token name is available, it logs the details of the newly created ERC20 token.
+        - The script also generates an HTML report using a template, which includes the contract addresses, block numbers, token names, and total supplies of the newly created tokens.
+        </p>
+        <p>
+          Created By: 
+          <a href="https://twitter.com/RyokuReps" target="_blank">
+            <img src="https://abs.twimg.com/favicons/twitter.ico" alt="Twitter Icon" style="height: 1em;">
+            Ryoku
+          </a>
         </p>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
