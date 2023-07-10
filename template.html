@@ -60,9 +60,10 @@
         .table-danger {
             background-color: #F2DEDE; /* Light red */
         }
-        .table tbody :hover {
-        background-color: rgba(128, 128, 128, 0.8) !important; /* Light black on hover */
-    }
+        .table tbody tr:hover td {
+            background-color: rgba(128, 128, 128, 0.8) !important; /* Light black on hover */
+            color: white !important; /* White text on hover */
+        }
     </style>
     <script>
         function toggleAbout() {
@@ -169,11 +170,11 @@
         <thead class="bg-success text-white">
             <tr>
                 <th style="font-size: 20px;">Timestamp</th>
-                <th style="font-size: 20px;">GoPlus Security Info</th>
                 <th style="font-size: 20px;">Contract Address</th>
                 <th style="font-size: 20px;">Contract Creator</th>
                 <th style="font-size: 20px;">Block Number</th>
                 <th style="font-size: 20px;">Token Name</th>
+                <th style="font-size: 20px;">GoPlus Security Info</th>
                 <th style="font-size: 20px;">Total Supply</th>
             </tr>
         </thead>
@@ -181,7 +182,6 @@
             {% for contract in contracts %}
             <tr>
                 <td class="timestamp-column" style="font-size: 18px;">{{ contract[5]|format_number }}</td>
-                <td><button id="button_{{ loop.index0 }}" onclick="fetchTokenInfo('{{ contract[0] }}', 'button_{{ loop.index0 }}')">Token Info</button></td>
                 <td style="font-size: 18px;">
                     <a href="https://gopluslabs.io/token-security/1/{{ contract[0] }}">{{ contract[0] }}</a>
                     <a href="https://www.dextools.io/app/ether/pair-explorer/{{ contract[0] }}" target="_blank">
@@ -202,6 +202,7 @@
                 </td>                
                 <td style="font-size: 18px;">{{ contract[2] }}</td>
                 <td style="font-size: 18px;">{{ contract[3] }}</td>
+                <td><button id="button_{{ loop.index0 }}" onclick="fetchTokenInfo('{{ contract[0] }}', 'button_{{ loop.index0 }}')">Token Info</button></td>
                 <td style="font-size: 18px;">
                     {% if contract[4] is defined %}
                         {{ contract[4]|format_number }}
