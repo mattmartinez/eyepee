@@ -34,7 +34,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0);
             color: white;
             padding: 20px;
             border-radius: 5px;
@@ -58,9 +58,11 @@
 <body>
     <h1 class="text-center">EYEPEE ERC20 Token Scanner</h1>
     <div class="about-container border rounded p-3 text-center position-relative">
-        <a href="javascript:void(0);" class="about-toggle" onclick="toggleAbout()">About</a>
-        <div class="position-absolute end-0 top-50 translate-middle-y" style="color: red; font-weight: bold;">
-            THIS WEBSITE WILL NEVER ASK FOR A WALLET CONNECTION
+        <div class="about-container border rounded p-3 text-center position-relative">
+            <a href="javascript:void(0);" class="about-toggle" onclick="toggleAbout()">About</a>
+            <div class="position-absolute end-0 top-50 translate-middle-y" style="color: red; font-weight: bold;">
+                THIS WEBSITE WILL NEVER ASK FOR A WALLET CONNECTION
+            </div>
         </div>
     </div>       
     <table class="table table-bordered">
@@ -77,31 +79,33 @@
             {% for contract in contracts %}
             <tr>
                 <td style="font-size: 18px;">
-                    <a href="https://gopluslabs.io/token-security/1/{{ contract.address }}">{{ contract.address }}</a>
-                    <a href="https://www.dextools.io/app/ether/pair-explorer/{{ contract.address }}" target="_blank">
+                    <a href="https://gopluslabs.io/token-security/1/{{ contract[0] }}">{{ contract[0] }}</a>
+                    <a href="https://www.dextools.io/app/ether/pair-explorer/{{ contract[0] }}" target="_blank">
                         <img src="https://www.dextools.io/app/assets/img/logo/apple-touch-icon.png" alt="DexTools Icon" style="height: 1em;">
                     </a>
-                    <a href="https://dexscreener.com/ethereum/{{ contract.address }}" target="_blank">
+                    <a href="https://dexscreener.com/ethereum/{{ contract[0] }}" target="_blank">
                         <img src="https://dexscreener.com/favicon.png" alt="DexScreener Icon" style="height: 1em;">
                     </a>
-                    <a href="https://etherscan.io/address/{{ contract.address }}" target="_blank">
+                    <a href="https://etherscan.io/address/{{ contract[0] }}" target="_blank">
                         <img src="https://etherscan.io/images/favicon3.ico" alt="Etherscan Icon" style="height: 1em;">
                     </a>
                 </td>
                 <td style="font-size: 18px;">
-                    <a href="https://gopluseco.io/analysis/{{ contract.creator }}">{{ contract.creator }}</a>
-                    <a href="https://etherscan.io/address/{{ contract.creator }}" target="_blank">
+                    <a href="https://gopluseco.io/analysis/{{ contract[1] }}">{{ contract[1] }}</a>
+                    <a href="https://etherscan.io/address/{{ contract[1] }}" target="_blank">
                         <img src="https://etherscan.io/images/favicon3.ico" alt="Etherscan Icon" style="height: 1em;">
                     </a>
                 </td>                
-                <td style="font-size: 18px;">{{ contract.block }}</td>
-                <td style="font-size: 18px;">{{ contract.name }}</td>
-                <td style="font-size: 18px;">{{ contract.supply }}</td>
+                <td style="font-size: 18px;">{{ contract[2] }}</td>
+                <td style="font-size: 18px;">{{ contract[3] }}</td>
+                <td style="font-size: 18px;">{{ contract[4] }}</td>
             </tr>
-        {% endfor %}             
+            {% endfor %}             
         </tbody>
     </table>
     <div id="popup" class="popup" style="display: none;">
+        <span class="popup-close" onclick="toggleAbout()">Close</span>
+
         <span class="popup-close" onclick="toggleAbout()">Close</span>
         <p>This app is a scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.
         <br><br>
@@ -117,6 +121,7 @@
             Ryoku
           </a>
         </p>
+    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
