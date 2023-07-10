@@ -53,7 +53,7 @@ def home(page_num):
     c = conn.cursor()
 
     # Load contracts from the database
-    c.execute('SELECT * FROM contracts')
+    c.execute('SELECT * FROM contracts ORDER BY timestamp DESC')
     contracts = c.fetchall()
 
     total_contracts = len(contracts)
