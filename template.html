@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="600">
+    <title>SHITCOINS ARE FUN Scanner</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+        .about-container {
+            margin-bottom: 20px;
+            border: 1px solid white;
+            text-align: center;
+        }
+        .about-toggle {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        table {
+            font-size: 18px;
+        }
+        th, td {
+            font-size: 18px;
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0);
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 9999;
+        }
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            cursor: pointer;
+        }
+        .popup-content {
+            max-height: calc(80vh - 100px); /* subtract the size of the close button and some padding */
+            overflow-y: auto; /* add scrollbar if content exceeds height */
+            padding: 10px;
+        }
+        .table-success {
+            background-color: #DFF0D8; /* Light green */
+        }
+        .table-danger {
+            background-color: #F2DEDE; /* Light red */
+        }
+        .table tbody :hover {
+        background-color: rgba(128, 128, 128, 0.8) !important; /* Light black on hover */
+    }
+    </style>
+    <script>
+        function toggleAbout() {
+            var popup = document.getElementById("popup");
+            popup.style.display = (popup.style.display === "none") ? "block" : "none";
+        }
+
+        function toggleTokenInfoPopup() {
+            var popup = document.getElementById("token-info-popup");
+            popup.style.display = (popup.style.display === "none") ? "block" : "none";
+        }
+        $(document).ready(function() {
+            $('#token-search-form').submit(function(e) {
+                e.preventDefault();
+                var contractAddress = $('#contract-address').val();
+                fetchTokenInfo(contractAddress, 'search');
+            });
+        });
+        function fetchTokenInfo(contractAddress, buttonId) {
+            console.log('Fetching token info for: ' + contractAddress);
+            $.ajax({
+                url: '/token_info',
+                type: 'POST',
+                data: JSON.stringify({contract_address: contractAddress}),
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log('Response received: ', response);
+                    var tableBody = $('#token-info-table-body');
+                    tableBody.empty(); // Clear previous table rows
+
+                    // Loop through the response object and create table rows dynamically
+                    Object.keys(response).forEach(function(key) {
+                        var value = response[key];
+                        var row = $('<tr></tr>');
+
+                        // Set color based on specific key-value pairs
+                        if (key === 'can_take_back_ownership' || key === 'is_blacklisted' || key === 'is_honeypot' || key === 'is_proxy') {
+                            row.addClass(value ? 'table-danger' : 'table-success');
+                        } else if (key === 'is_in_dex' || key === 'is_open_source') {
+                            row.addClass(value ? 'table-success' : 'table-danger');
+                        }
+
+                        row.append($('<td></td>').text(key));
+                        row.append($('<td></td>').text(value));
+                        tableBody.append(row);
+                    });
+
+                    toggleTokenInfoPopup();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error occurred while fetching token info: ', textStatus, errorThrown);
+                    alert('Error occurred while fetching token info.');
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1 class="text-center">SHITCOINS ARE FUN Scanner</h1>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form id="token-search-form">
+                    <div class="input-group">
+                        <input type="text" id="contract-address" class="form-control" placeholder="Enter ERC20 contract address" required>
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="about-container border rounded p-3 text-center position-relative">
+        <div class="about-container border rounded p-3 text-center position-relative">
+            <a href="javascript:void(0);" class="about-toggle" onclick="toggleAbout()">About</a>
+        </div>
+    </div>
+    <div class="pagination">
+        <ul class="pagination justify-content-center">
+            {% if current_page > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('home', page_num=current_page - 1) }}">Previous</a>
+                </li>
+            {% endif %}
+            {% for page_num in range(1, total_pages + 1) %}
+                {% if page_num == current_page %}
+                    <li class="page-item active">
+                        <a class="page-link" href="{{ url_for('home', page_num=page_num) }}">{{ page_num }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('home', page_num=page_num) }}">{{ page_num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if current_page < total_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('home', page_num=current_page + 1) }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    <table class="table table-bordered text-center">
+        <thead class="bg-success text-white">
+            <tr>
+                <th style="font-size: 20px;">Timestamp</th>
+                <th style="font-size: 20px;">GoPlus Security Info</th>
+                <th style="font-size: 20px;">Contract Address</th>
+                <th style="font-size: 20px;">Contract Creator</th>
+                <th style="font-size: 20px;">Block Number</th>
+                <th style="font-size: 20px;">Token Name</th>
+                <th style="font-size: 20px;">Total Supply</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contract in contracts %}
+            <tr>
+                <td class="timestamp-column" style="font-size: 18px;">{{ contract[5]|format_number }}</td>
+                <td><button id="button_{{ loop.index0 }}" onclick="fetchTokenInfo('{{ contract[0] }}', 'button_{{ loop.index0 }}')">Token Info</button></td>
+                <td style="font-size: 18px;">
+                    <a href="https://gopluslabs.io/token-security/1/{{ contract[0] }}">{{ contract[0] }}</a>
+                    <a href="https://www.dextools.io/app/ether/pair-explorer/{{ contract[0] }}" target="_blank">
+                        <img src="https://www.dextools.io/app/assets/img/logo/apple-touch-icon.png" alt="DexTools Icon" style="height: 1em;">
+                    </a>
+                    <a href="https://dexscreener.com/ethereum/{{ contract[0] }}" target="_blank">
+                        <img src="https://dexscreener.com/favicon.png" alt="DexScreener Icon" style="height: 1em;">
+                    </a>
+                    <a href="https://etherscan.io/address/{{ contract[0] }}" target="_blank">
+                        <img src="https://etherscan.io/images/favicon3.ico" alt="Etherscan Icon" style="height: 1em;">
+                    </a>
+                </td>
+                <td style="font-size: 18px;">
+                    <a href="https://gopluseco.io/analysis/{{ contract[1] }}">{{ contract[1] }}</a>
+                    <a href="https://etherscan.io/address/{{ contract[1] }}" target="_blank">
+                        <img src="https://etherscan.io/images/favicon3.ico" alt="Etherscan Icon" style="height: 1em;">
+                    </a>
+                </td>                
+                <td style="font-size: 18px;">{{ contract[2] }}</td>
+                <td style="font-size: 18px;">{{ contract[3] }}</td>
+                <td style="font-size: 18px;">
+                    {% if contract[4] is defined %}
+                        {{ contract[4]|format_number }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>  
+    <p class="text-center" style="font-size: 24px; margin-top: 20px; color: red; font-weight: bold;">
+        ** Do your own research before investing in any token, there's more to understand than what this app can provide. ** <br>
+        ** THIS WEBSITE WILL NEVER ASK FOR A WALLET CONNECTION **
+    </p>
+    <div id="token-info-popup" class="popup" style="display: none;">
+        <span class="popup-close" onclick="toggleTokenInfoPopup()">Close</span>
+        <br>
+        <div class="popup-content">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody id="token-info-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>        
+    <div id="popup" class="popup" style="display: none;">
+        <span class="popup-close" onclick="toggleAbout()">Close</span>
+        <p>This app is a scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.
+        <br><br>
+        - It continuously checks for new blocks and scans the transactions within those blocks. <br>
+        - When it detects a contract creation transaction, it retrieves the contract address and fetches the token name and total supply. <br>
+        - If the token name is available, it logs the details of the newly created ERC20 token. <br>
+        - The script renders the data using jinja2 into a table. <br>
+        - Integrated with https://gopluseco.io for Token Info button, which displays the token's security score and other information. <br>
+        </p>
+        <p>
+          Created By: 
+          <a href="https://twitter.com/RyokuReps" target="_blank">
+            <img src="https://abs.twimg.com/favicons/twitter.ico" alt="Twitter Icon" style="height: 1em;">
+            Ryoku
+          </a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
