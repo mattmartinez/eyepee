@@ -9,6 +9,8 @@ http://eyepee.lol ~ **reports back with simply your IP with a php file.**
 http://eyepee.lol/scanner ~ **This app is scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.**
 
 - It continuously checks for new blocks and scans the transactions within those blocks.
-- When a contract creation transaction is detected, it retrieves: [contract_address, creator_address, token_name, total_supply]
+- When it detects a contract creation transaction, it retrieves the contract address and fetches the token name and total supply.
 - If the token name is available, it logs the details of the newly created ERC20 token.
-- The script also generates an HTML report using a template, which includes the contract addresses, contract owner, block numbers, token names, and total supply.
+- The script renders the data using jinja2 into a table.
+- Integrated with https://gopluseco.io for Token Info button, which displays the token's security score and other information.
+- Auto-refresh every 60s.
