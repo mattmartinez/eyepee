@@ -15,3 +15,7 @@ http://eyepee.lol/scanner ~ **This app is scanner that keeps track of newly crea
 - The data is rendered using Jinja2 into a neatly organized table.
 - Integrated with https://gopluseco.io for Token Info button, which displays the token's security score and other information.
 - The application auto-refreshes every 60s to keep the data up-to-date with the latest tokens.
+---
+
+- Update https://mainnet.infura.io/v3/API_KEY_HERE with your API key in blockchain_scanner.py
+- Update the purge passkey in shitcoins_app.py
