@@ -13,29 +13,26 @@ logging.basicConfig(
 
 app = Flask(__name__)
 
-@app.route('/so_long_and_goodnight')
-def purge_db():
-    passkey = request.form.get('passkey')
-    if passkey != 'YOUR_PASSKEY':
+@app.route('/so_long_and_goodnight/<passkey>')
+def purge_db(passkey):
+    if passkey == "YOUR_PASSKEY":
+        conn = sqlite3.connect('contracts.db')
+        c = conn.cursor()
+
+        c.execute('''
+            DELETE FROM contracts
+            WHERE timestamp NOT IN (
+                SELECT MAX(timestamp) 
+                FROM contracts
+            )
+        ''')
+
+        conn.commit()
+        conn.close()
+
+        return "Database purged, kept most recent entry"
+    else:
         return "Invalid passkey"
-    
-    conn = sqlite3.connect('contracts.db')
-    c = conn.cursor()
-
-    c.execute('''
-        DELETE FROM contracts
-        WHERE timestamp NOT IN (
-            SELECT MAX(timestamp) 
-            FROM contracts
-        )
-    ''')
-
-    conn.commit()
-    conn.close()
-
-    return "Database purged, kept most recent entry"
-
-
 
 def format_number(value):
     if isinstance(value, str):
