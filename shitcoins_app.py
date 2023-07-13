@@ -14,6 +14,29 @@ logging.basicConfig(
 
 app = Flask(__name__)
 
+@app.route('/so_long_and_goodnight')
+def purge_db():
+    # Connect to the SQLite database
+    conn = sqlite3.connect('contracts.db')
+    c = conn.cursor()
+
+    # Delete all contracts except for the one with the highest timestamp
+    c.execute('''
+        DELETE FROM contracts
+        WHERE timestamp NOT IN (
+            SELECT MAX(timestamp) 
+            FROM contracts
+        )
+    ''')
+
+    # Commit the changes and close the connection
+    conn.commit()
+    conn.close()
+
+    return "Database purged, kept most recent entry"
+
+
+
 def format_number(value):
     if isinstance(value, str):
         return value
@@ -46,7 +69,7 @@ def index():
 
 @app.route('/<int:page_num>')
 def home(page_num):
-    contracts_per_page = 20
+    contracts_per_page = 40
 
     # Connect to the SQLite database
     conn = sqlite3.connect('contracts.db')
