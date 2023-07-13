@@ -19,5 +19,6 @@ http://eyepee.lol  **This app is scanner that keeps track of newly created ERC20
 - Update the purge passkey in shitcoins_app.py
 
 ---
+# IP reporter
 http://eyepee.lol/ip ~ **reports back simply your IP, nothing else**
 - this was the original use of this domain
