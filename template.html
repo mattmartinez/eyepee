@@ -53,19 +53,19 @@
             cursor: pointer;
         }
         .popup-content {
-            max-height: calc(80vh - 100px); /* subtract the size of the close button and some padding */
-            overflow-y: auto; /* add scrollbar if content exceeds height */
+            max-height: calc(80vh - 100px);
+            overflow-y: auto;
             padding: 10px;
         }
         .table-success {
-            background-color: #DFF0D8; /* Light green */
+            background-color: #DFF0D8;
         }
         .table-danger {
-            background-color: #F2DEDE; /* Light red */
+            background-color: #F2DEDE;
         }
         .table tbody tr:hover td {
-            background-color: rgba(128, 128, 128, 0.8) !important; /* Light black on hover */
-            color: white !important; /* White text on hover */
+            background-color: rgba(128, 128, 128, 0.8) !important;
+            color: white !important;
         }
         .table-container {
             max-width: 80%;
@@ -110,14 +110,12 @@
                 success: function(response) {
                     console.log('Response received: ', response);
                     var tableBody = $('#token-info-table-body');
-                    tableBody.empty(); // Clear previous table rows
+                    tableBody.empty();
 
-                    // Loop through the response object and create table rows dynamically
                     Object.keys(response).forEach(function(key) {
                         var value = response[key];
                         var row = $('<tr></tr>');
 
-                        // Set color based on specific key-value pairs
                         if (key === 'can_take_back_ownership' || key === 'is_blacklisted' || key === 'is_honeypot' || key === 'is_proxy') {
                             row.addClass(value ? 'table-danger' : 'table-success');
                         } else if (key === 'is_in_dex' || key === 'is_open_source') {
