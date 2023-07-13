@@ -1,9 +1,7 @@
 # EYEPEE (IP) and EYEPEE ERC20 Scanner
 ---
-http://eyepee.lol/ip ~ **reports back with simply your IP**
 
-
-http://eyepee.lol/scanner ~ **This app is scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.**
+http://eyepee.lol  **This app is scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.**
 
 - It continuously checks for new blocks and scans the transactions within those blocks.
 - When it detects a contract creation transaction, it retrieves the contract address and the address of the contract creator.
@@ -19,3 +17,7 @@ http://eyepee.lol/scanner ~ **This app is scanner that keeps track of newly crea
 
 - Update https://mainnet.infura.io/v3/API_KEY_HERE with your API key in blockchain_scanner.py
 - Update the purge passkey in shitcoins_app.py
+
+---
+http://eyepee.lol/ip ~ **reports back simply your IP, nothing else**
+- this was the original use of this domain
