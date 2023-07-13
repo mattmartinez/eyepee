@@ -1,6 +1,6 @@
 # EYEPEE (IP) and EYEPEE ERC20 Scanner
 ---
-http://eyepee.lol/ip ~ **reports back with simply your IP with a php file.**
+http://eyepee.lol/ip ~ **reports back with simply your IP**
 
 
 http://eyepee.lol/scanner ~ **This app is scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.**
