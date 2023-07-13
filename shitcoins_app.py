@@ -5,7 +5,6 @@ import math
 from token_utils import getContractScan, extractSafeyVector
 import datetime
 
-# Configure logging
 logging.basicConfig(
     filename='/var/log/scanner/scanner.log',
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -16,11 +15,13 @@ app = Flask(__name__)
 
 @app.route('/so_long_and_goodnight')
 def purge_db():
-    # Connect to the SQLite database
+    passkey = request.form.get('passkey')
+    if passkey != 'YOUR_PASSKEY':
+        return "Invalid passkey"
+    
     conn = sqlite3.connect('contracts.db')
     c = conn.cursor()
 
-    # Delete all contracts except for the one with the highest timestamp
     c.execute('''
         DELETE FROM contracts
         WHERE timestamp NOT IN (
@@ -29,7 +30,6 @@ def purge_db():
         )
     ''')
 
-    # Commit the changes and close the connection
     conn.commit()
     conn.close()
 
@@ -49,7 +49,6 @@ def format_number(value):
 
 app.jinja_env.filters['format_number'] = format_number
 
-# Define your route for token_info endpoint
 @app.route('/token_info', methods=['POST'])
 def token_info():
     contract_address = request.get_json().get('contract_address')
@@ -57,7 +56,6 @@ def token_info():
     data = getContractScan(1, contract_address)
     data = extractSafeyVector(contract_address, data)
 
-    # If you want to log the data for debugging purposes:
     app.logger.info(data)
 
     return data
@@ -74,11 +72,9 @@ def index():
 def home(page_num):
     contracts_per_page = 40
 
-    # Connect to the SQLite database
     conn = sqlite3.connect('contracts.db')
     c = conn.cursor()
 
-    # Load contracts from the database
     c.execute('SELECT * FROM contracts ORDER BY timestamp DESC')
     contracts = c.fetchall()
 
@@ -86,7 +82,7 @@ def home(page_num):
     total_pages = math.ceil(total_contracts / contracts_per_page)
 
     if page_num < 1 or page_num > total_pages:
-        return redirect(url_for('home', page_num=total_pages))  # Redirect to the last available page
+        return redirect(url_for('home', page_num=total_pages))
 
     start = (page_num - 1) * contracts_per_page
     end = start + contracts_per_page
@@ -98,7 +94,6 @@ def home(page_num):
     with open("index.html", "w") as f:
         f.write(rendered)
 
-    # Close the cursor and connection
     c.close()
     conn.close()
 
