@@ -62,6 +62,9 @@ def token_info():
 
     return data
 
+@app.route('/ip')
+def get_my_ip():
+    return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
 @app.route('/')
 def index():
