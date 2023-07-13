@@ -12,7 +12,36 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-ERC20_ABI = [{"constant":True,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":False,"stateMutability":"view","type":"function"},{"constant":True,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":False,"stateMutability":"view","type":"function"}]
+ERC20_ABI = [
+    {
+        "constant": True,
+        "inputs": [],
+        "name": "name",
+        "outputs": [
+            {
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "payable": False,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": True,
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": False,
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
 
 w3 = Web3(HTTPProvider('https://mainnet.infura.io/v3/API_KEY_HERE'))
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
