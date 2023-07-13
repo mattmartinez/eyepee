@@ -1,16 +1,17 @@
 # EYEPEE (IP) and EYEPEE ERC20 Scanner
 ---
-http://eyepee.lol ~ **reports back with simply your IP with a php file.**
+http://eyepee.lol/ip ~ **reports back with simply your IP with a php file.**
 
-```
-<?php echo $_SERVER['REMOTE_ADDR']; ?>
-```
 
 http://eyepee.lol/scanner ~ **This app is scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.**
 
 - It continuously checks for new blocks and scans the transactions within those blocks.
-- When it detects a contract creation transaction, it retrieves the contract address and fetches the token name and total supply.
-- If the token name is available, it logs the details of the newly created ERC20 token.
-- The script renders the data using jinja2 into a table.
+- When it detects a contract creation transaction, it retrieves the contract address and the address of the contract creator.
+- It fetches the token name and total supply.
+- If the token name is available, it logs the details of the newly created ERC20 token, including the contract address, the creator's address, the token name, and the total supply.
+- The script consolidates the contract address and creator's address into a single column for a more streamlined display, with each being a clickable link leading to their respective pages on Etherscan.
+- It adjusts the table's width dynamically to utilize the available screen space efficiently, reducing excessive white space.
+- It implements pagination controls, center-aligned, to enable easy navigation across different pages of token data.
+- The data is rendered using Jinja2 into a neatly organized table.
 - Integrated with https://gopluseco.io for Token Info button, which displays the token's security score and other information.
-- Auto-refresh every 60s.
+- The application auto-refreshes every 60s to keep the data up-to-date with the latest tokens.
