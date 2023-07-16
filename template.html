@@ -71,6 +71,15 @@
             max-width: 80%;
             margin: auto;
         }
+        .word-wrap-table td {
+            white-space: normal;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .word-wrap-table th:nth-child(1), 
+        .word-wrap-table td:nth-child(1) {
+            width: 20%;
+        }
     </style>
     <script>
         function toggleAbout() {
@@ -207,9 +216,10 @@
                             Contract Address: 
                             <a href="https://etherscan.io/address/{{ contract[0] }}" target="_blank">{{ contract[0] }}</a> <br>
                             Contract Creator: 
-                            <a href="https://etherscan.io/address/{{ contract[1] }}" target="_blank">{{ contract[1] }}</a>
+                            <a href="https://etherscan.io/address/{{ contract[1] }}" target="_blank">{{ contract[1] }}</a> <br>
+                            <a href="dextools.io/app/en/ether/pair-explorer/{{ contract[0] }}" target="_blank">Dextools</a> <br>
                         </td>                
-                        <td style="font-size: 18px;">{{ contract[3] }}</td>
+                        <td style="font-size: 18px; max-width: 200px; word-wrap: break-word;">{{ contract[3] }}</td>
                         <td><a class="btn btn-primary" href="https://tokensniffer.com/token/eth/{{ contract[0] }}" target="_blank">Open</a></td>
                         <td>
                             <a class="btn btn-primary" href="https://gopluslabs.io/token-security/1/{{ contract[0] }}" target="_blank">Full Scan</a>
@@ -232,7 +242,7 @@
         <span class="popup-close" onclick="toggleTokenInfoPopup()">Close</span>
         <br>
         <div class="popup-content">
-            <table class="table table-bordered">
+            <table class="table table-bordered word-wrap-table">
                 <thead>
                     <tr>
                         <th>Field</th>
@@ -243,7 +253,7 @@
                 </tbody>
             </table>
         </div>
-    </div>        
+    </div>
     <div id="popup" class="popup" style="display: none;">
         <span class="popup-close" onclick="toggleAbout()">Close</span>
         <p>This app is a scanner that keeps track of newly created ERC20 tokens on the Ethereum blockchain.
