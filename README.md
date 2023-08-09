@@ -18,6 +18,7 @@ http://eyepee.lol  **This app is scanner that keeps track of newly created ERC20
 # REQUIRED changes
 - Update https://mainnet.infura.io/v3/API_KEY_HERE with your API key in blockchain_scanner.py
 - Replace "YOUR_PASSKEY" with the actual passkey
+- Use this URL to purge the DB.
 
 ---
 # IP reporter
